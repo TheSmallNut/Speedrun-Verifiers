@@ -1,13 +1,12 @@
 import requests, json, sys
 
-
+#Base URL for all the requests
 BASE_URL = "https://www.speedrun.com/api/v1/"
 ITTGameID = "kdkm3re1"
 
 def getUsername(userID):
     url = BASE_URL + "users/" + userID
-    info = requests.get(url)
-    info = info.json()
+    info = getJsonOnPage(url)
     name = info["data"]["names"]["international"]
     return name
 
@@ -31,15 +30,13 @@ def nextPage(info):
 
 def getGameIDFromName(gameName):
     url = BASE_URL + "games?name=" + gameName
-    info = requests.get(url)
-    info = info.json()
+    info = getJsonOnPage(url)
     gameID = info["data"][0]["id"]
     return gameID
 
 def getPlayerIDFromUsername(username):
     url = BASE_URL + "users?name=" + username
-    info = requests.get(url)
-    info = info.json()
+    info = getJsonOnPage(url)
     playerID = info["data"][0]["id"]
     return playerID
 
